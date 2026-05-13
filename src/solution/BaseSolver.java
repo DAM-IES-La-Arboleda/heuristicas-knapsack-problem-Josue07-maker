@@ -7,19 +7,18 @@ import java.util.List;
 
 public class BaseSolver implements KnapsackSolver {
 
-    @Override
-    public List<Item> solve(List<Item> items, double capacity) {
-        List<Item> selectedItems = new ArrayList<>();
-        double currentWeight = 0;
-
-        for (Item item : items) {
-            // Si el objeto cabe con lo que ya tenemos, para adentro
-            if (currentWeight + item.weight() <= capacity) {
-                selectedItems.add(item);
-                currentWeight += item.weight();
-            }
-        }
-
-        return selectedItems;
-    }
+	@Override
+	public List<Item> solve(List<Item> items, double capacity) {
+		items.sort((x, y) -> Double.compare(y.value() / y.weight(), x.value() / x.weight()));
+		List<Item> selectedItems = new ArrayList<>();
+		double currentWeight = 0;
+		for (Item item : items) {
+			// Si el objeto cabe con lo que ya tenemos, para adentro
+			if (currentWeight + item.weight() <= capacity) {
+				selectedItems.add(item);
+				currentWeight += item.weight();
+			}
+		}
+		return selectedItems;
+	}
 }
